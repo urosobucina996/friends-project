@@ -20,8 +20,12 @@ Route::post('user','UserController@index');
 Route::get('allUsers','UserController@allUsers')->middleware('access');
 
 // Invitation Route
-Route::post('invite','InvitationController@invite');
-Route::post('reply','InvitationController@replyToInvite');
-Route::post('getSent','InvitationController@getSentInvitaion');
-Route::post('getRecived','InvitationController@getRecivedInvitaion');
+Route::middleware(['access'])->group(function () {
+    //
+    Route::post('invite','InvitationController@invite');
+    Route::post('reply','InvitationController@replyToInvite');
+    Route::post('getSent','InvitationController@getSentInvitaion');
+    Route::post('getRecived','InvitationController@getRecivedInvitaion');
+});
+
 

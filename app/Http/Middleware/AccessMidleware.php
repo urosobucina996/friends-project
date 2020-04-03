@@ -17,7 +17,9 @@ class AccessMidleware
     public function handle($request, Closure $next)
     {
         $token = $request->header();
+        if(isset($token['token'][0]))
         $tokenExists = User::getUserByToken($token['token'][0]);
+        else return response()->json(['message' => 'Send token.']);
         $tokenValidate = $tokenExists->first();
         //dd($tokenValidate,strtotime($tokenValidate->expires_at),strtotime(date("Y-m-d H:i:s")));
         if($tokenValidate && strtotime(date("Y-m-d H:i:s"))<strtotime($tokenValidate->expires_at)){
