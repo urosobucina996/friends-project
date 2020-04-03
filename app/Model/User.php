@@ -4,10 +4,14 @@ namespace App\Model;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
+use DB;
 
-class User extends Model
+class User extends Authenticatable
 {
+    use HasApiTokens, Notifiable;
 
     protected $table = "users";
 
@@ -28,19 +32,26 @@ class User extends Model
         'password',
     ];
 
-    public static function login($name,$password)
+    public static function login($request,$name,$password)
     {
-        //dd(Hash::make($password));
-        $user = self::getOne($name);
+        $user = User::where(['name'=>$name,'password'=>sha1($password)])->first();
         if(!empty($user)){
-            dd(Hash::check($password,$user['password']));
+            $user->createToken('authToken')->accessToken;
+            dd('in',$user,$request->all());
         }
-        //dd(Hash::check($password,$user['password']));
         return '';
     }
 
     public static function getOne($name){
         return User::where('name',$name)->first();
+    }
+
+    public static function getAll(){
+        return User::all();
+    }
+
+    public static function getUserByToken($token){
+        return DB::table('oauth_access_tokens')->where('id',$token);
     }
 
 }

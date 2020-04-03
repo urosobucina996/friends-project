@@ -14,12 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+//Route::middleware('auth:api')->get('allUsers','UserController@allUsers');
 // User Route
 Route::post('user','UserController@index');
+Route::get('allUsers','UserController@allUsers')->middleware('access');
 
 // Invitation Route
 Route::post('invite','InvitationController@invite');
+Route::post('reply','InvitationController@replyToInvite');
+Route::post('getSent','InvitationController@getSentInvitaion');
+Route::post('getRecived','InvitationController@getRecivedInvitaion');
 
