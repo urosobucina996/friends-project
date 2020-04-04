@@ -27,7 +27,6 @@ class InvitationRequest extends FormRequest
             //
             'reciver_name' => 'required',
             'message' => 'required',
-            //'id' => ''
         ];
     }
 }

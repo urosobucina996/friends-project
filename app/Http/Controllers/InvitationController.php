@@ -11,7 +11,7 @@ class InvitationController extends Controller
 {
     //
     public function invite(InvitationRequest $request){
-        //TODO ispitaj da li je ulogovan i od njega izmi ID
+        
         $parameters = $request->all();
         $reciver = User::getOne($parameters['reciver_name']);
         if($reciver['id']){

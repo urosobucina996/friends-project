@@ -1,0 +1,17 @@
+- To login into system trigger route api/login (POST Method).
+-- Into body of request send parameters 'name' and 'pass'.
+--- If Your accoun is in the system, token for this account will be created.
+
+- Endpoints below access after login and send parameter 'token' into header.
+
+- To get all users form system api/allUsers (GET Method).
+
+- To send invitation trigger route api/invite (POST method).
+-- 	In body of request send parameters 'reciver_name' and 'message'.
+
+- To reply to invitation trigger route api/reply (POST Method).
+-- In body of request send 'id' of invitation that want to answer.
+
+- To get all sent invitations from your user account trigger action api/getSent (POST Method).
+
+- To get all reviced invitations from your user account trigger action api/getRecived (POST Method).
