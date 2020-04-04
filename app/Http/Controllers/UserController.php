@@ -9,9 +9,8 @@ use App\Http\Requests\UserRequest;
 class UserController extends Controller
 {
     //
-    public function index(UserRequest $request){
+    public function login(UserRequest $request){
         $requestData = $request->all();
-        dump($requestData);
         $data = User::login($request,$requestData['name'],$requestData['pass']);
     }
 

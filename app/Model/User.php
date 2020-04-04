@@ -37,7 +37,6 @@ class User extends Authenticatable
         $user = User::where(['name'=>$name,'password'=>sha1($password)])->first();
         if(!empty($user)){
             $user->createToken('authToken')->accessToken;
-            dd('in',$user,$request->all());
         }
         return '';
     }
