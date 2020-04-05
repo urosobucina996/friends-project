@@ -9,7 +9,7 @@
 - To send invitation trigger route api/invite (POST method).
 -- 	In body of request send parameters 'receiver_name' and 'message'.
 
-- To reject to invitation trigger route api/reject (POST Method).
+- To reject invitation trigger route api/reject (POST Method).
 -- In body of request send 'id' of invitation that you want to reject.
 
 - To reply to invitation trigger route api/reply (POST Method).
