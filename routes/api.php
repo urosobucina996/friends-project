@@ -24,6 +24,7 @@ Route::middleware(['access'])->group(function () {
     //
     Route::post('invite','InvitationController@invite');
     Route::post('reply','InvitationController@replyToInvitation');
+    Route::post('reject','InvitationController@rejectInvitation');
     Route::post('getSent','InvitationController@getSentInvitaion');
     Route::post('getRecived','InvitationController@getRecivedInvitaion');
 });

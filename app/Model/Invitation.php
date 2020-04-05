@@ -23,7 +23,6 @@ class Invitation extends Model
         $storeInvitation['id_sender'] = $id_sender;
         $storeInvitation['id_receiver'] = $id_receiver;
         $storeInvitation['message'] = $message;
-        $storeInvitation['status'] = 0;
         $storeInvitation->save();
     }
 
@@ -31,6 +30,14 @@ class Invitation extends Model
         $updated = Invitation::where(['id_receiver' => $id_receiver, 'id' => $id_invite])->first();
         if($updated){
             $updated['status'] = 1;
+            $updated->save();
+        }
+    }
+
+    public static function rejectInvitation($id_invite,$id_receiver){
+        $updated = Invitation::where(['id_receiver' => $id_receiver, 'id' => $id_invite])->first();
+        if($updated){
+            $updated['status'] = 0;
             $updated->save();
         }
     }

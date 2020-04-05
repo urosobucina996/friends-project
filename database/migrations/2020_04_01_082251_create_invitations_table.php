@@ -18,7 +18,7 @@ class CreateInvitationsTable extends Migration
             $table->integer('id_sender');
             $table->integer('id_receiver');
             $table->text('message');
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
     }

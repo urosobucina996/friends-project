@@ -35,6 +35,17 @@ class InvitationController extends Controller
         }
     }
 
+    public function rejectInvitation(Request $request){
+
+        $parameter = $request->all();
+        if($parameter['id']){   
+            $replyUser = self::userIdByToken($request);
+            $updateInvitation = Invitation::rejectInvitation($parameter['id'],$replyUser->user_id);
+        }else{
+            return '';
+        }
+    }
+
     public function getRecivedInvitaion(Request $request){
 
         $receiver = self::userIdByToken($request);
