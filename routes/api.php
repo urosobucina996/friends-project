@@ -23,7 +23,7 @@ Route::get('allUsers','UserController@allUsers')->middleware('access');
 Route::middleware(['access'])->group(function () {
     //
     Route::post('invite','InvitationController@invite');
-    Route::post('reply','InvitationController@replyToInvite');
+    Route::post('reply','InvitationController@replyToInvitation');
     Route::post('getSent','InvitationController@getSentInvitaion');
     Route::post('getRecived','InvitationController@getRecivedInvitaion');
 });

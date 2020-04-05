@@ -13,23 +13,23 @@ class InvitationController extends Controller
     public function invite(InvitationRequest $request){
         
         $parameters = $request->all();
-        $reciver = User::getOne($parameters['reciver_name']);
-        if($reciver['id']){
+        $receiver = User::getOne($parameters['receiver_name']);
+        if($receiver['id']){
             $sender = self::userIdByToken($request);
             if($sender){
-                Invitation::store($sender->user_id,$reciver['id'],$parameters['message']);
+                Invitation::store($sender->user_id,$receiver['id'],$parameters['message']);
                 return 'Invitation has been sent.';
             }            
         }
-        return 'No Reciver found';
+        return 'No receiver found';
     }
 
-    public function replyToInvite(Request $request){
+    public function replyToInvitation(Request $request){
         
         $parameter = $request->all();
         if($parameter['id']){   
             $replyUser = self::userIdByToken($request);
-            $updateInvitation = Invitation::getInvitation($parameter['id'],$replyUser->user_id);
+            $updateInvitation = Invitation::updateInvitation($parameter['id'],$replyUser->user_id);
         }else{
             return '';
         }
@@ -37,11 +37,11 @@ class InvitationController extends Controller
 
     public function getRecivedInvitaion(Request $request){
 
-        $reciver = self::userIdByToken($request);
-        if($reciver){   
-           return Invitation::getInvitationByReciver($reciver->user_id);
+        $receiver = self::userIdByToken($request);
+        if($receiver){   
+           return Invitation::getInvitationByreceiver($receiver->user_id);
         }else{
-            return 'No messages for revicer';
+            return 'No messages for receiver';
         }
     }
 

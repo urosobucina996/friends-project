@@ -25,7 +25,7 @@ class InvitationRequest extends FormRequest
     {
         return [
             //
-            'reciver_name' => 'required',
+            'receiver_name' => 'required',
             'message' => 'required',
         ];
     }

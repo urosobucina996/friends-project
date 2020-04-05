@@ -26,7 +26,7 @@ class AccessMidleware
             return $next($request);
         }
         else {
-            return response()->json(['message' => 'You are not authorized to access.']);
+            return response()->json(['message' => 'Your token has expired.']);
         }
     }
 }
