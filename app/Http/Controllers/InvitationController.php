@@ -50,7 +50,7 @@ class InvitationController extends Controller
 
         $receiver = self::userIdByToken($request);
         if($receiver){   
-           return Invitation::getInvitationByreceiver($receiver->user_id);
+           return Invitation::getInvitationByReceiver($receiver->user_id);
         }else{
             return 'No messages for receiver';
         }

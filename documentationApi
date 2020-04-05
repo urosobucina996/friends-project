@@ -1,6 +1,7 @@
 - To login into system trigger route api/login (POST Method).
 -- Into body of request send parameters 'name' and 'pass'.
 --- If Your accoun is in the system, token for this account will be created.
+---- account(name=>'uros',pass=>'Uros1234'),(name=>'petar',pass=>'Petar1234').
 
 - Endpoints below access after login and send parameter 'token' into header.
 

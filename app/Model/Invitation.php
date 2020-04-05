@@ -46,7 +46,7 @@ class Invitation extends Model
         return Invitation::where('id_sender',$id_sender)->get();
     }
 
-    public static function getInvitationByReciver($id_receiver){
+    public static function getInvitationByReceiver($id_receiver){
         return Invitation::where('id_receiver',$id_receiver)->get();
     }
 }
