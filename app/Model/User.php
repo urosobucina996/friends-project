@@ -35,10 +35,11 @@ class User extends Authenticatable
     public static function login($request,$name,$password)
     {
         $user = User::where(['name'=>$name,'password'=>hash("sha256",$password)])->first();
-        if(!empty($user)){
+        if(is_null($user)){
+            echo "User no found!";
+        }else{
             $user->createToken('authToken')->accessToken;
         }
-        return '';
     }
 
     public static function getOne($name){
