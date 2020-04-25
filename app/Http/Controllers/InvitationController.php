@@ -9,45 +9,43 @@ use App\Http\Requests\InvitationRequest;
 
 class InvitationController extends Controller
 {
-    //
-    public function invite(InvitationRequest $request){
-        
+
+    public function invite(InvitationRequest $request)
+    {
         $parameters = $request->all();
         $receiver = User::getOne($parameters['receiver_name']);
-        if($receiver['id']){
-            $sender = self::userIdByToken($request);
-            if($sender){
-                Invitation::store($sender->user_id,$receiver['id'],$parameters['message']);
-                return 'Invitation has been sent.';
-            }            
+        if(!$receiver){
+            return 'No receiver found';          
         }
-        return 'No receiver found';
+        $sender = self::userIdByToken($request);
+        if($sender){
+            Invitation::store($sender->user_id,$receiver['id'],$parameters['message']);
+            return 'Invitation has been sent.';
+        }   
     }
 
-    public function replyToInvitation(Request $request){
-        
-        $parameter = $request->all();
-        if($parameter['id']){   
-            $replyUser = self::userIdByToken($request);
-            $updateInvitation = Invitation::updateInvitation($parameter['id'],$replyUser->user_id);
-        }else{
-            return '';
+    public function replyToInvitation(Request $request)
+    {
+        $param = $this->requestHendler($request,'reply');
+        if(intval($param) == 0){
+            return $param;
         }
+        $replyUser = self::userIdByToken($request);
+        Invitation::updateInvitation(intval($param),$replyUser->user_id);
     }
 
-    public function rejectInvitation(Request $request){
-
-        $parameter = $request->all();
-        if($parameter['id']){   
-            $replyUser = self::userIdByToken($request);
-            $updateInvitation = Invitation::rejectInvitation($parameter['id'],$replyUser->user_id);
-        }else{
-            return '';
+    public function rejectInvitation(Request $request)
+    {
+        $param = $this->requestHendler($request,'reject');
+        if(intval($param) == 0){
+            return $param;
         }
+        $replyUser = self::userIdByToken($request);
+        Invitation::rejectInvitation(intval($param),$replyUser->user_id);
     }
 
-    public function getRecivedInvitaion(Request $request){
-
+    public function getRecivedInvitaion(Request $request)
+    {
         $receiver = self::userIdByToken($request);
         if($receiver){   
            return Invitation::getInvitationByReceiver($receiver->user_id);
@@ -56,8 +54,8 @@ class InvitationController extends Controller
         }
     }
 
-    public function getSentInvitaion(Request $request){
-        
+    public function getSentInvitaion(Request $request)
+    {
         $sednder = self::userIdByToken($request);
         if($sednder){   
             return Invitation::getInvitationBySender($sednder->user_id);
@@ -66,11 +64,29 @@ class InvitationController extends Controller
         }
     }
 
-    protected static function userIdByToken($request){
-
+    protected static function userIdByToken($request)
+    {
         $sender_id = $request->header();  
         $userData = User::getUserByToken($sender_id['token'][0]);
         return $userData->first();
+    }
+
+    protected function requestHendler($request,$type)
+    {
+        $parameter = $request->all();
+        if(!$parameter){
+            switch($type){
+                case 'reply':
+                    return 'Send id parametar!';
+                break;
+                case 'reject':
+                    return 'Send id to reply invitation!';
+                break;
+                default:
+                    return 'Send parametar';
+            }
+        }
+        return $parameter['id'];
     }
 
 }
