@@ -14,6 +14,11 @@ class UserController extends Controller
         $data = User::login($request,$requestData['name'],$requestData['pass']);
     }
 
+    public function register(UserRequest $request){
+        $requestData = $request->all();
+        User::register($requestData);
+    }
+
     public function allUsers(){
         return User::getAll();
     }

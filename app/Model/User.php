@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use DB;
+use Exception;
 
 class User extends Authenticatable
 {
@@ -40,6 +41,25 @@ class User extends Authenticatable
         }else{
             $user->createToken('authToken')->accessToken;
         }
+    }
+
+    public static function register($data){
+
+        try{
+            $user = new User();
+            $user['name'] = $data['name'];
+            $user['password'] = hash("sha256",$data['pass']);
+            $user->save();
+            // DOES need to login to create token after registration or it will to here
+            echo 'You are in.';
+        }catch(Exception $e){
+            if ($e->getCode() == 23000) {
+                    echo "User already exist.";  
+            }
+            // TODO check if there is more errors
+            //echo $e->getMessage();
+        }
+        
     }
 
     public static function getOne($name){

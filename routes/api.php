@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware('auth:api')->get('allUsers','UserController@allUsers');
 // User Route
 Route::post('login','UserController@login');
+Route::post('register','UserController@register');
 Route::get('allUsers','UserController@allUsers')->middleware('access');
 
 // Invitation Route
